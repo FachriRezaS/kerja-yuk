@@ -2,9 +2,23 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Home, CalendarCheck, LogOut, FileText, Bell, Settings, Clock } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function Dashboard() {
     const router = useRouter();
+    const [greeting, setGreeting] = useState("Good Morning");
+
+    useEffect(() => {
+        const hour = new Date().getHours();
+        if (hour >= 5 && hour < 12) {
+        setGreeting("Good Morning");
+        } else if (hour >= 12 && hour < 18) {
+        setGreeting("Good Afternoon");
+        } else {
+        setGreeting("Good Evening");
+        }
+    }, []);
+
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
@@ -16,7 +30,7 @@ export default function Dashboard() {
                 </button>
             </header>
 
-            <div className="p-4 text-lg font-semibold">Hi, Good Morning!</div>
+            <div className="p-4 text-lg font-semibold">Hi, {greeting}!</div>
 
             {/* Profile Card */}
             <Card className="bg-red-500 text-white p-4 rounded-xl flex justify-between">
